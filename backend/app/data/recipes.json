@@ -1,0 +1,8 @@
+[
+  {"name":"Moong Dal Chilla","diet":["vegetarian","vegan"],"goals":["speedy","protein","low-calorie"],"appliances":["stove"],"time_minutes":20,"cost":95,"calories":320,"protein_grams":22,"ingredients":{"Moong dal":"250 g","Onion":"2","Tomato":"2","Coriander":"1 bunch"}},
+  {"name":"Paneer Tikka Bowl","diet":["vegetarian"],"goals":["protein","healthy-comfort"],"appliances":["stove","air-fryer","oven"],"time_minutes":30,"cost":165,"calories":510,"protein_grams":31,"ingredients":{"Paneer":"300 g","Capsicum":"2","Curd":"200 g","Rice":"300 g"}},
+  {"name":"Rajma Rice Bowl","diet":["vegetarian","vegan"],"goals":["protein","family","healthy-comfort"],"appliances":["stove","pressure-cooker"],"time_minutes":40,"cost":120,"calories":560,"protein_grams":24,"ingredients":{"Rajma":"300 g","Rice":"400 g","Onion":"2","Tomato":"3"}},
+  {"name":"Soya Keema Wrap","diet":["vegetarian","vegan"],"goals":["protein","speedy","fakeaway"],"appliances":["stove"],"time_minutes":25,"cost":110,"calories":430,"protein_grams":29,"ingredients":{"Soya granules":"250 g","Whole wheat wraps":"6","Onion":"2","Capsicum":"1"}},
+  {"name":"Vegetable Pulao & Raita","diet":["vegetarian"],"goals":["family","healthy-comfort"],"appliances":["stove","pressure-cooker"],"time_minutes":28,"cost":130,"calories":475,"protein_grams":14,"ingredients":{"Rice":"400 g","Mixed vegetables":"500 g","Curd":"300 g"}},
+  {"name":"Chana Masala","diet":["vegetarian","vegan"],"goals":["protein","gut-friendly"],"appliances":["stove","pressure-cooker"],"time_minutes":35,"cost":105,"calories":440,"protein_grams":21,"ingredients":{"Chickpeas":"350 g","Tomato":"3","Onion":"2","Whole wheat atta":"500 g"}}
+]

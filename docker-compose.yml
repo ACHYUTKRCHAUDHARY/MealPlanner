@@ -1,0 +1,9 @@
+services:
+  api:
+    build: ./backend
+    ports: ["8000:8000"]
+    volumes: ["./backend:/app"]
+  web:
+    image: nginx:alpine
+    ports: ["8080:80"]
+    volumes: ["./frontend:/usr/share/nginx/html:ro"]
