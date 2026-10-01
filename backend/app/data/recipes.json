@@ -1,8 +1,532 @@
 [
-  {"name":"Moong Dal Chilla","diet":["vegetarian","vegan"],"goals":["speedy","protein","low-calorie"],"appliances":["stove"],"time_minutes":20,"cost":95,"calories":320,"protein_grams":22,"ingredients":{"Moong dal":"250 g","Onion":"2","Tomato":"2","Coriander":"1 bunch"}},
-  {"name":"Paneer Tikka Bowl","diet":["vegetarian"],"goals":["protein","healthy-comfort"],"appliances":["stove","air-fryer","oven"],"time_minutes":30,"cost":165,"calories":510,"protein_grams":31,"ingredients":{"Paneer":"300 g","Capsicum":"2","Curd":"200 g","Rice":"300 g"}},
-  {"name":"Rajma Rice Bowl","diet":["vegetarian","vegan"],"goals":["protein","family","healthy-comfort"],"appliances":["stove","pressure-cooker"],"time_minutes":40,"cost":120,"calories":560,"protein_grams":24,"ingredients":{"Rajma":"300 g","Rice":"400 g","Onion":"2","Tomato":"3"}},
-  {"name":"Soya Keema Wrap","diet":["vegetarian","vegan"],"goals":["protein","speedy","fakeaway"],"appliances":["stove"],"time_minutes":25,"cost":110,"calories":430,"protein_grams":29,"ingredients":{"Soya granules":"250 g","Whole wheat wraps":"6","Onion":"2","Capsicum":"1"}},
-  {"name":"Vegetable Pulao & Raita","diet":["vegetarian"],"goals":["family","healthy-comfort"],"appliances":["stove","pressure-cooker"],"time_minutes":28,"cost":130,"calories":475,"protein_grams":14,"ingredients":{"Rice":"400 g","Mixed vegetables":"500 g","Curd":"300 g"}},
-  {"name":"Chana Masala","diet":["vegetarian","vegan"],"goals":["protein","gut-friendly"],"appliances":["stove","pressure-cooker"],"time_minutes":35,"cost":105,"calories":440,"protein_grams":21,"ingredients":{"Chickpeas":"350 g","Tomato":"3","Onion":"2","Whole wheat atta":"500 g"}}
+  {
+    "name": "Moong Dal Chilla",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "speedy",
+      "protein",
+      "low-calorie"
+    ],
+    "time_minutes": 20,
+    "cost": 95,
+    "calories": 320,
+    "protein_grams": 22,
+    "ingredients": [
+      {
+        "name": "moong dal",
+        "quantity": 250.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "onion",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "tomato",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "coriander",
+        "quantity": 1.0,
+        "unit": "bunch",
+        "unit_cost": null
+      }
+    ],
+    "id": "bd01a9bb-135d-5713-a14d-0996c24ba741",
+    "servings": 2,
+    "description": "Moong Dal Chilla \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "appliance_options": [
+      [
+        "stove"
+      ]
+    ],
+    "allergens": [],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Paneer Tikka Bowl",
+    "diet": [
+      "vegetarian"
+    ],
+    "goals": [
+      "protein",
+      "healthy-comfort"
+    ],
+    "time_minutes": 30,
+    "cost": 165,
+    "calories": 510,
+    "protein_grams": 31,
+    "ingredients": [
+      {
+        "name": "paneer",
+        "quantity": 300.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "capsicum",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "curd",
+        "quantity": 200.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "rice",
+        "quantity": 300.0,
+        "unit": "g",
+        "unit_cost": null
+      }
+    ],
+    "id": "9d8f9c13-4c89-55fd-af8c-db5f5513dfca",
+    "servings": 2,
+    "description": "Paneer Tikka Bowl \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove"
+      ]
+    ],
+    "allergens": [
+      "dairy"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Rajma Rice Bowl",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "protein",
+      "family",
+      "healthy-comfort"
+    ],
+    "time_minutes": 40,
+    "cost": 120,
+    "calories": 560,
+    "protein_grams": 24,
+    "ingredients": [
+      {
+        "name": "rajma",
+        "quantity": 300.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "rice",
+        "quantity": 400.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "onion",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "tomato",
+        "quantity": 3.0,
+        "unit": "count",
+        "unit_cost": null
+      }
+    ],
+    "id": "eacf3c81-ebf9-5bc8-9921-7e27e5eeafc9",
+    "servings": 2,
+    "description": "Rajma Rice Bowl \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove",
+        "pressure-cooker"
+      ]
+    ],
+    "allergens": [],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Soya Keema Wrap",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "protein",
+      "speedy",
+      "fakeaway"
+    ],
+    "time_minutes": 25,
+    "cost": 110,
+    "calories": 430,
+    "protein_grams": 29,
+    "ingredients": [
+      {
+        "name": "soya granules",
+        "quantity": 250.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "whole wheat wraps",
+        "quantity": 6.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "onion",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "capsicum",
+        "quantity": 1.0,
+        "unit": "count",
+        "unit_cost": null
+      }
+    ],
+    "id": "c769bdc6-b6ff-590f-8355-eb450d2bbe41",
+    "servings": 2,
+    "description": "Soya Keema Wrap \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove"
+      ]
+    ],
+    "allergens": [
+      "gluten",
+      "soy"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Vegetable Pulao & Raita",
+    "diet": [
+      "vegetarian"
+    ],
+    "goals": [
+      "family",
+      "healthy-comfort"
+    ],
+    "time_minutes": 28,
+    "cost": 130,
+    "calories": 475,
+    "protein_grams": 14,
+    "ingredients": [
+      {
+        "name": "rice",
+        "quantity": 400.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "mixed vegetables",
+        "quantity": 500.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "curd",
+        "quantity": 300.0,
+        "unit": "g",
+        "unit_cost": null
+      }
+    ],
+    "id": "6befb7b2-229c-570f-9748-8faa9b7c62e4",
+    "servings": 2,
+    "description": "Vegetable Pulao & Raita \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove",
+        "pressure-cooker"
+      ]
+    ],
+    "allergens": [
+      "dairy"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Chana Masala",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "protein",
+      "gut-friendly"
+    ],
+    "time_minutes": 35,
+    "cost": 105,
+    "calories": 440,
+    "protein_grams": 21,
+    "ingredients": [
+      {
+        "name": "chickpeas",
+        "quantity": 350.0,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "tomato",
+        "quantity": 3.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "onion",
+        "quantity": 2.0,
+        "unit": "count",
+        "unit_cost": null
+      },
+      {
+        "name": "whole wheat atta",
+        "quantity": 500.0,
+        "unit": "g",
+        "unit_cost": null
+      }
+    ],
+    "id": "c83ad18a-4b38-58fd-8948-4b818fc28bc4",
+    "servings": 2,
+    "description": "Chana Masala \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove",
+        "pressure-cooker"
+      ]
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Legacy project estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Palak Tofu",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "low-calorie",
+      "protein",
+      "gut-friendly"
+    ],
+    "time_minutes": 32,
+    "cost": 170,
+    "calories": 390,
+    "protein_grams": 27,
+    "ingredients": [
+      {
+        "name": "tofu",
+        "quantity": 300,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "spinach",
+        "quantity": 500,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "garlic",
+        "quantity": 1,
+        "unit": "bulb",
+        "unit_cost": null
+      },
+      {
+        "name": "rice",
+        "quantity": 300,
+        "unit": "g",
+        "unit_cost": null
+      }
+    ],
+    "id": "915f5949-2e5d-5bbf-97b0-1b728877ba15",
+    "servings": 2,
+    "description": "Palak Tofu \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove",
+        "blender"
+      ]
+    ],
+    "allergens": [
+      "soy"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Original frontend recipe estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  },
+  {
+    "name": "Masala Oats Khichdi",
+    "diet": [
+      "vegetarian",
+      "vegan"
+    ],
+    "goals": [
+      "speedy",
+      "low-calorie",
+      "gut-friendly"
+    ],
+    "time_minutes": 20,
+    "cost": 85,
+    "calories": 350,
+    "protein_grams": 15,
+    "ingredients": [
+      {
+        "name": "oats",
+        "quantity": 300,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "moong dal",
+        "quantity": 150,
+        "unit": "g",
+        "unit_cost": null
+      },
+      {
+        "name": "mixed vegetables",
+        "quantity": 300,
+        "unit": "g",
+        "unit_cost": null
+      }
+    ],
+    "id": "dab89cc0-5640-5750-8df4-b4fde5ca9c85",
+    "servings": 2,
+    "description": "Masala Oats Khichdi \u2014 Indian home-style meal.",
+    "cuisine": "Indian",
+    "meal_types": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "appliance_options": [
+      [
+        "stove",
+        "pressure-cooker"
+      ]
+    ],
+    "allergens": [
+      "gluten"
+    ],
+    "allergen_reviewed": true,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "prep_time": null,
+    "cook_time": null,
+    "instructions": [],
+    "nutrition_source": "Original frontend recipe estimate; not independently verified; per person",
+    "cost_source": "Legacy project estimate in INR per recipe batch; ingredient prices unavailable",
+    "allergen_note": "Ingredient-list screening only; verify product labels and cross-contact separately."
+  }
 ]

@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Plan Indian meals around your budget, diet and kitchen." />
   <title>Plateful — Smart Indian meal planning</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/fonts.css">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="brand" id="brandButton" aria-label="Go to planner start"><span class="brand-mark">P</span><span>plateful</span></button>
-      <div class="header-actions"><span class="saved-pill" id="savedStatus">Plan auto-saved</span><button class="icon-button" id="themeButton" aria-label="Toggle colour theme">◐</button></div>
+      <div class="header-actions"><button class="secondary-button" id="historyButton">History</button><button class="secondary-button" id="accountButton">Sign in</button><span class="saved-pill" id="savedStatus">Plan auto-saved</span><button class="icon-button" id="themeButton" aria-label="Toggle colour theme">◐</button></div>
     </header>
 
     <main>
+      <aside id="errorBanner" class="error-banner hidden" role="alert"><p id="errorText"></p><button id="retryButton" class="secondary-button">Retry</button><button id="dismissError" class="secondary-button">Dismiss</button></aside>
       <section class="wizard" id="wizard">
         <div class="wizard-header">
           <button class="back-button" id="backButton" aria-label="Previous step">←</button>
@@ -37,19 +37,23 @@
 
       <section class="dashboard hidden" id="dashboard">
         <div class="dashboard-hero">
-          <div><span class="eyebrow">YOUR WEEK, PLANNED</span><h1>Good food. Less figuring out.</h1><p id="planSummary"></p><div class="hero-actions"><button class="primary-button" id="newPlanButton">Create another plan</button><button class="secondary-button" id="printButton">Print grocery list</button></div></div>
-          <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=85" alt="A colourful spread of vegetarian food" />
+          <div><span class="eyebrow">YOUR WEEK, PLANNED</span><h1>Good food. Less figuring out.</h1><p id="planSummary"></p><div class="hero-actions"><button class="primary-button" id="newPlanButton">Create another plan</button><button class="secondary-button" id="savePlanButton">Save plan</button><button class="secondary-button" id="printButton">Print grocery list</button></div></div>
+          <img src="assets/meal-spread.jpg" alt="A colourful spread of vegetarian food" />
         </div>
 
-        <div class="metric-row" id="metricRow"></div>
-        <div class="tabs" role="tablist"><button class="tab active" data-tab="meals">Weekly meals</button><button class="tab" data-tab="groceries">Grocery list</button></div>
+        <ul id="planWarnings" class="plan-warnings"></ul><p id="retrievalStatus"></p><div class="metric-row" id="metricRow"></div>
+        <nav class="tabs" aria-label="Plan views"><button class="tab active" data-tab="meals">Weekly meals</button><button class="tab" data-tab="groceries">Grocery list</button></nav>
         <div id="mealsPanel" class="panel"></div>
-        <div id="groceriesPanel" class="panel hidden"></div>
+        <div id="groceriesPanel" class="panel hidden"></div><section id="nutritionTotals"></section>
       </section>
     </main>
     <footer><span>Plateful</span><span>Built for thoughtful, affordable eating.</span></footer>
   </div>
   <div class="toast" id="toast" role="status"></div>
+  <dialog id="authDialog" aria-labelledby="authTitle"><button class="dialog-close" id="closeAuth" aria-label="Close account">×</button><h2 id="authTitle">Your Plateful account</h2><p>Sign in to generate and save plans. Sessions end when you reload this page.</p><form id="authForm"><label for="email">Email</label><input class="text-input" id="email" type="email" autocomplete="email" required maxlength="254"><label for="password">Password (12–128 characters)</label><input class="text-input" id="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><p id="authError" role="alert"></p><div class="dialog-actions"><button class="primary-button" type="submit" data-mode="login">Sign in</button><button class="secondary-button" type="submit" data-mode="register">Create account</button></div></form><button class="secondary-button hidden" id="logoutButton">Sign out on all devices</button></dialog>
+  <dialog id="historyDialog" aria-labelledby="historyTitle"><button class="dialog-close" id="closeHistory" aria-label="Close history">×</button><h2 id="historyTitle">Saved plans</h2><div id="historyItems"></div><div class="dialog-actions"><button id="historyPrevious" class="secondary-button">Previous</button><button id="historyNext" class="secondary-button">Next</button></div></dialog>
+  <script src="config.js"></script>
+  <script src="api.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
