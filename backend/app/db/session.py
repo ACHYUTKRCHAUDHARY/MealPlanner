@@ -13,6 +13,8 @@ def engine():
             # Ensure SSL is used in production for managed databases
             if settings().environment == 'production' and 'sslmode=' not in url:
                 url += ('&' if '?' in url else '?') + 'sslmode=require'
+    if settings().environment == 'production' and url.startswith('sqlite'):
+        raise ValueError('SQLite is not allowed in production.')
     kwargs = {'connect_args': {'check_same_thread': False}} if url.startswith('sqlite') else {}
     return create_engine(url, pool_pre_ping=True, hide_parameters=True, **kwargs)
 

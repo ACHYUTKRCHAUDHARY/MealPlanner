@@ -112,29 +112,75 @@ $('savePlanButton').onclick=()=>busy($('savePlanButton'),async()=>{
   // busy restores text after its promise; update label on the next event-loop turn.
   setTimeout(()=>{$('savePlanButton').textContent='Saved ✓';$('savePlanButton').disabled=true},0);
 });
-$('accountButton').onclick=()=>{$('authDialog').showModal()};
+$('accountButton').onclick=async ()=>{
+  if(API.signedIn()){
+    busy($('accountButton'), async () => {
+      const me = await API.request('/auth/me');
+      $('accountEmail').textContent = me.email;
+      $('accountStatus').textContent = me.email_verified ? 'Verified ✓' : 'Not verified';
+      $('verifyEmailBtn').classList.toggle('hidden', me.email_verified);
+      $('accountDialog').showModal();
+    });
+  } else {
+    $('authLoginSection').classList.remove('hidden');
+    $('authForgotSection').classList.add('hidden');
+    $('authDialog').showModal();
+  }
+};
 $('closeAuth').onclick=()=>{$('authDialog').close()};
+$('closeAccount').onclick=()=>{$('accountDialog').close()};
+$('showForgotBtn').onclick=()=>{
+  $('authLoginSection').classList.add('hidden');
+  $('authForgotSection').classList.remove('hidden');
+};
+$('showLoginBtn').onclick=()=>{
+  $('authForgotSection').classList.add('hidden');
+  $('authLoginSection').classList.remove('hidden');
+};
 $('authForm').onsubmit=event=>{
   event.preventDefault();
   const mode=event.submitter.dataset.mode;
+  if(mode==='forgot'){
+    busy(event.submitter,async()=>{
+      $('forgotError').textContent='';
+      try{await API.request('/auth/request-password-reset',{method:'POST',body:{email:$('forgotEmail').value}})}
+      catch(error){$('forgotError').textContent=error.message;throw error}
+      toast('If an account exists, a reset link was sent.');
+      $('authDialog').close();
+    });
+    return;
+  }
   busy(event.submitter,async()=>{
     $('authError').textContent='';
     let data;
     try{data=await API.request('/auth/'+mode,{method:'POST',body:{email:$('email').value,password:$('password').value}})}
     catch(error){$('authError').textContent=error.message;throw error}
     API.setToken(data.access_token);$('password').value='';$('accountButton').textContent='Account';
-    $('logoutButton').classList.remove('hidden');$('authDialog').close();
+    $('authDialog').close();
     const [preferences,pantry]=await Promise.all([API.request('/users/me/preferences'),API.request('/users/me/pantry')]);
     if(preferences){state={...state,...preferences,diet:[preferences.diet],exclusions:preferences.exclusions.join(',')};
       state.pantry=pantry.items.map(i=>i.quantity==null?i.name:`${i.name}: ${i.quantity} ${i.unit}`).join('\n');render()}
     toast('Signed in. Your saved preferences are ready.');
   });
 };
+$('verifyEmailBtn').onclick=()=>busy($('verifyEmailBtn'),async()=>{
+  await API.request('/auth/send-verification',{method:'POST'});
+  toast('Verification email sent.');
+});
 $('logoutButton').onclick=()=>busy($('logoutButton'),async()=>{
   await API.request('/auth/logout',{method:'POST'});API.setToken(null);currentPlan=null;
   state={...defaults,days:[...DAYS]};localStorage.removeItem('plateful-state');render();
-  $('accountButton').textContent='Sign in';$('logoutButton').classList.add('hidden');
-  $('authDialog').close();$('historyDialog').close();$('dashboard').classList.add('hidden');$('wizard').classList.remove('hidden');
+  $('accountButton').textContent='Sign in';
+  $('accountDialog').close();$('historyDialog').close();$('dashboard').classList.add('hidden');$('wizard').classList.remove('hidden');
+});
+$('deleteAccountBtn').onclick=()=>busy($('deleteAccountBtn'),async()=>{
+  if(!confirm('Are you sure you want to permanently delete your account and all saved plans? This cannot be undone.'))return;
+  await API.request('/auth/account',{method:'DELETE'});
+  API.setToken(null);currentPlan=null;
+  state={...defaults,days:[...DAYS]};localStorage.removeItem('plateful-state');render();
+  $('accountButton').textContent='Sign in';
+  $('accountDialog').close();$('historyDialog').close();$('dashboard').classList.add('hidden');$('wizard').classList.remove('hidden');
+  toast('Account deleted.');
 });
 let historyOffset=0;
 async function loadHistory(){
@@ -156,3 +202,31 @@ $('historyPrevious').onclick=()=>busy($('historyPrevious'),async()=>{historyOffs
 $('historyNext').onclick=()=>busy($('historyNext'),async()=>{historyOffset+=20;await loadHistory()});
 $('closeHistory').onclick=()=>$('historyDialog').close();
 $('dismissError').onclick=clearError;
+
+(async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const verifyToken = params.get('verify_token');
+  const resetToken = params.get('reset_token');
+  if (verifyToken) {
+    try {
+      await API.request('/auth/verify-email', {method: 'POST', body: {token: verifyToken}});
+      toast('Email verified successfully! Please sign in.');
+    } catch (e) { toast('Invalid or expired verification link.'); }
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } else if (resetToken) {
+    $('resetPasswordDialog').showModal();
+    $('cancelResetBtn').onclick=()=>{$('resetPasswordDialog').close();window.history.replaceState({}, document.title, window.location.pathname);};
+    $('resetForm').onsubmit=(e)=>{
+      e.preventDefault();
+      busy($('resetForm').querySelector('button[type="submit"]'), async ()=>{
+        $('resetError').textContent='';
+        try {
+          await API.request('/auth/reset-password', {method: 'POST', body: {token: resetToken, new_password: $('newPassword').value}});
+          toast('Password reset successfully. Please sign in.');
+          $('resetPasswordDialog').close();
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (err) { $('resetError').textContent = err.message; throw err; }
+      });
+    };
+  }
+})();

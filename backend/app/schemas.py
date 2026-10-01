@@ -117,6 +117,15 @@ class EmailOnly(StrictModel):
         return str(value).lower()
 
 
+class ResetPassword(StrictModel):
+    token: str = Field(min_length=1, max_length=100)
+    new_password: str = Field(min_length=12, max_length=128)
+
+
+class VerifyEmail(StrictModel):
+    token: str = Field(min_length=1, max_length=100)
+
+
 class PantryRequest(StrictModel):
     items: list[Quantity] = Field(max_length=100)
 

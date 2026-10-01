@@ -50,7 +50,62 @@
     <footer><span>Plateful</span><span>Built for thoughtful, affordable eating.</span></footer>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <dialog id="authDialog" aria-labelledby="authTitle"><button class="dialog-close" id="closeAuth" aria-label="Close account">×</button><h2 id="authTitle">Your Plateful account</h2><p>Sign in to generate and save plans. Sessions end when you reload this page.</p><form id="authForm"><label for="email">Email</label><input class="text-input" id="email" type="email" autocomplete="email" required maxlength="254"><label for="password">Password (12–128 characters)</label><input class="text-input" id="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" required><p id="authError" role="alert"></p><div class="dialog-actions"><button class="primary-button" type="submit" data-mode="login">Sign in</button><button class="secondary-button" type="submit" data-mode="register">Create account</button></div></form><button class="secondary-button hidden" id="logoutButton">Sign out on all devices</button></dialog>
+  <dialog id="authDialog" aria-labelledby="authTitle">
+    <button class="dialog-close" id="closeAuth" aria-label="Close account">×</button>
+    <h2 id="authTitle">Your Plateful account</h2>
+    <p>Sign in to generate and save plans. Sessions end when you reload this page.</p>
+    <form id="authForm">
+      <div id="authLoginSection">
+        <label for="email">Email</label>
+        <input class="text-input" id="email" type="email" autocomplete="email" required maxlength="254">
+        <label for="password">Password (12–128 characters)</label>
+        <input class="text-input" id="password" type="password" autocomplete="current-password" minlength="12" maxlength="128" required>
+        <p id="authError" role="alert"></p>
+        <div class="dialog-actions">
+          <button class="primary-button" type="submit" data-mode="login">Sign in</button>
+          <button class="secondary-button" type="submit" data-mode="register">Create account</button>
+        </div>
+        <button type="button" class="text-button" id="showForgotBtn" style="margin-top:1rem;">Forgot password?</button>
+      </div>
+      <div id="authForgotSection" class="hidden">
+        <p>Enter your email to receive a password reset link.</p>
+        <label for="forgotEmail">Email</label>
+        <input class="text-input" id="forgotEmail" type="email" autocomplete="email" maxlength="254">
+        <p id="forgotError" role="alert"></p>
+        <div class="dialog-actions">
+          <button class="primary-button" type="submit" data-mode="forgot">Send reset link</button>
+          <button class="secondary-button" type="button" id="showLoginBtn">Back to sign in</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="accountDialog" aria-labelledby="accountTitle">
+    <button class="dialog-close" id="closeAccount" aria-label="Close account">×</button>
+    <h2 id="accountTitle">Account settings</h2>
+    <div class="account-details">
+      <p><strong>Email:</strong> <span id="accountEmail"></span></p>
+      <p><strong>Status:</strong> <span id="accountStatus"></span></p>
+      <button class="secondary-button hidden" id="verifyEmailBtn" style="margin-bottom:1rem;">Send verification email</button>
+    </div>
+    <div class="dialog-actions" style="flex-direction:column;gap:1rem;">
+      <button class="secondary-button" id="logoutButton" style="width:100%;">Sign out on all devices</button>
+      <button class="secondary-button" id="deleteAccountBtn" style="width:100%;color:#c81e1e;border-color:#c81e1e;">Delete account permanently</button>
+    </div>
+  </dialog>
+
+  <dialog id="resetPasswordDialog" aria-labelledby="resetTitle">
+    <h2 id="resetTitle">Reset password</h2>
+    <form id="resetForm">
+      <label for="newPassword">New Password (12–128 characters)</label>
+      <input class="text-input" id="newPassword" type="password" minlength="12" maxlength="128" required>
+      <p id="resetError" role="alert"></p>
+      <div class="dialog-actions">
+        <button class="primary-button" type="submit">Reset password</button>
+        <button class="secondary-button" type="button" id="cancelResetBtn">Cancel</button>
+      </div>
+    </form>
+  </dialog>
   <dialog id="historyDialog" aria-labelledby="historyTitle"><button class="dialog-close" id="closeHistory" aria-label="Close history">×</button><h2 id="historyTitle">Saved plans</h2><div id="historyItems"></div><div class="dialog-actions"><button id="historyPrevious" class="secondary-button">Previous</button><button id="historyNext" class="secondary-button">Next</button></div></dialog>
   <script src="config.js"></script>
   <script src="api.js"></script>

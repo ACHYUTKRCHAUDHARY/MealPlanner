@@ -6,7 +6,7 @@ This branch upgrades the existing prototype without replacing its frontend frame
 
 - Replaced frontend recipe selection and fake swaps with authenticated FastAPI requests.
 - Added PostgreSQL account, preference, recipe, ingredient, plan, grocery and pantry models plus Alembic migrations and validated, idempotent seed/import.
-- Consolidated all eight original frontend/backend recipes; recipe metadata, estimated nutrition/cost provenance and supported meal types are explicit.
+- Consolidated the original frontend/backend recipes and expanded the catalog to 62 demonstration recipes; recipe metadata, estimated nutrition/cost provenance and supported meal types are explicit.
 - Added hard diet/allergy/exclusion/appliance checks, budget-feasible selection, pantry scoring and normalized quantity aggregation/subtraction.
 - Added registration/login/logout, JWT ownership checks, saved history and transactionally updated swaps/grocery checklists.
 - Added actual SQL pgvector retrieval, resumable Gemini embedding indexing and schema-validated, fact-checked AI explanation highlights with visible deterministic fallback.
@@ -36,9 +36,9 @@ This branch upgrades the existing prototype without replacing its frontend frame
 1. Live PostgreSQL migration and pgvector SQL integration could not run locally: the environment could not create a non-root database OS account. The CI workflow provides PostgreSQL 16 + pgvector. Its result must be checked before merging/releasing.
 2. No live Gemini key was supplied. Provider calls, indexing and production model availability still need a real smoke test; AI error/output validation is unit tested.
 3. Render/Vercel resources were not provisioned or deployed. Hosted CORS, external DB connectivity, TLS and full hosted user flow remain release checks.
-4. Eight legacy recipes are a small demonstration catalog, with unverified nutrition/cost estimates, missing preparation instructions and missing carbohydrate/fat/fiber values. Import reviewed recipes, labels, cooking instructions, nutrient provenance and local ingredient prices before claiming dietary or medical reliability.
+4. The 62 legacy/generated recipes are a demonstration catalog, with unverified nutrition/cost estimates, missing preparation instructions and missing carbohydrate/fat/fiber values. Import reviewed recipes, labels, cooking instructions, nutrient provenance and local ingredient prices before claiming dietary or medical reliability.
 5. Name-only pantry entries never remove groceries. Unpriced recipes use conservative batch estimates without pantry cost discounts. With fully priced ingredients, budget feasibility search is bounded and reports limits.
-6. Password reset, email verification, refresh tokens/MFA, account deletion UI, automated draft retention, backups and production observability are not implemented. Sessions intentionally require login after reload.
+6. Refresh tokens/MFA, automated draft retention, backups and production observability are not implemented. Sessions intentionally require login after reload.
 7. Natural-language preferences and AI substitutions are not exposed. Deterministic swapping preserves constraints. Pantry stock is a snapshot, not an automatically consumed inventory.
 
 ## Exact deployment actions

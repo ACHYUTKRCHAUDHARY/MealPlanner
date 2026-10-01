@@ -18,6 +18,13 @@ class Settings(BaseSettings):
     embedding_model: str = 'gemini-embedding-001'
     ai_timeout_seconds: float = Field(default=12, gt=0, le=60)
     rate_limit_per_minute: int = Field(default=10, ge=1)
+    
+    # Email / SMTP
+    smtp_host: str = ''
+    smtp_port: int = 587
+    smtp_user: str = ''
+    smtp_password: str = ''
+    smtp_from: str = 'noreply@plateful.local'
 
     @property
     def origins(self) -> list[str]:

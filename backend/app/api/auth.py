@@ -10,7 +10,8 @@ from app.core.config import settings
 from app.core.errors import DomainError
 from app.db.models import User, AccountToken
 from app.db.session import session
-from app.schemas import Credentials, EmailOnly
+from app.schemas import Credentials, EmailOnly, ResetPassword, VerifyEmail
+from app.services.email import send_email
 
 router = APIRouter(prefix='/api/v1/auth', tags=['Authentication'])
 
@@ -84,28 +85,29 @@ def request_password_reset(body: EmailOnly, db: Session = Depends(session)):
     field in the request body is ignored; only the email is used for lookup."""
     user = db.scalar(select(User).where(User.email == body.email))
     if not user:
-        # Do not reveal whether the email exists — return a generic success message.
         return {'message': 'If an account with that email exists, a reset token has been created.'}
     raw = _create_account_token(db, user.id, 'password_reset', expire_minutes=30)
-    # In a real deployment, send `raw` via email. Never log it.
-    return {'message': 'If an account with that email exists, a reset token has been created.',
-            '_dev_token': raw if settings().environment != 'production' else None}
+    
+    reset_link = f"{settings().frontend_url}?reset_token={raw}"
+    send_email(
+        to_email=user.email,
+        subject="Reset your Plateful password",
+        text_body=f"Click the link below to reset your password. This link expires in 30 minutes.\n\n{reset_link}"
+    )
+        
+    return {'message': 'If an account with that email exists, a reset token has been created.'}
 
 
 @router.post('/reset-password')
-def reset_password(body: dict, db: Session = Depends(session)):
-    """Reset password using a single-use token. Body: {token, new_password}."""
-    raw_token = body.get('token', '')
-    new_password = body.get('new_password', '')
-    if not raw_token or not new_password or len(new_password) < 12 or len(new_password) > 128:
-        raise DomainError('validation_error', 'Provide a valid token and a password between 12 and 128 characters.')
-    account_token = _verify_account_token(db, raw_token, 'password_reset')
+def reset_password(body: ResetPassword, db: Session = Depends(session)):
+    """Reset password using a single-use token."""
+    account_token = _verify_account_token(db, body.token, 'password_reset')
     if not account_token:
         raise DomainError('invalid_token', 'This reset link has expired or was already used. Request a new one.', 400)
     user = db.get(User, account_token.user_id)
     if not user:
         raise DomainError('invalid_token', 'Account not found.', 400)
-    user.password_hash = passwords.hash(new_password)
+    user.password_hash = passwords.hash(body.new_password)
     user.token_version += 1  # Revoke all existing sessions.
     db.commit()
     return {'message': 'Password has been reset. Please sign in with your new password.'}
@@ -117,17 +119,21 @@ def send_verification(user: User = Depends(current_user), db: Session = Depends(
     if user.email_verified:
         return {'message': 'Email is already verified.'}
     raw = _create_account_token(db, user.id, 'email_verify', expire_minutes=60)
-    return {'message': 'Verification token created.',
-            '_dev_token': raw if settings().environment != 'production' else None}
+    
+    verify_link = f"{settings().frontend_url}?verify_token={raw}"
+    send_email(
+        to_email=user.email,
+        subject="Verify your Plateful account",
+        text_body=f"Click the link below to verify your email address. This link expires in 60 minutes.\n\n{verify_link}"
+    )
+        
+    return {'message': 'Verification token created.'}
 
 
 @router.post('/verify-email')
-def verify_email(body: dict, db: Session = Depends(session)):
-    """Verify email using a single-use token. Body: {token}."""
-    raw_token = body.get('token', '')
-    if not raw_token:
-        raise DomainError('validation_error', 'Provide a verification token.')
-    account_token = _verify_account_token(db, raw_token, 'email_verify')
+def verify_email(body: VerifyEmail, db: Session = Depends(session)):
+    """Verify email using a single-use token."""
+    account_token = _verify_account_token(db, body.token, 'email_verify')
     if not account_token:
         raise DomainError('invalid_token', 'This verification link has expired or was already used.', 400)
     user = db.get(User, account_token.user_id)

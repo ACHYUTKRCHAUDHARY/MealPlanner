@@ -2,11 +2,12 @@
 
 Plateful connects a vanilla JavaScript meal-planning wizard to a FastAPI backend with PostgreSQL persistence, account ownership, pgvector recipe retrieval and optional Gemini-assisted explanations. The original lime/cream visual design is retained.
 
-**Status:** implementation and local automated tests are available. This is not a claim that hosted production, live Gemini or the PostgreSQL CI run has been verified. See [verification and limitations](docs/IMPLEMENTATION.md). The bundled eight recipes use legacy, unverified nutrition and price estimates. They are a demonstration catalog, not a dietetic or medically validated source.
+**Status:** Implementation, local unit testing, and GitHub Actions CI (PostgreSQL + pgvector) tests are implemented. **Production deployment, live Gemini integration, and hosted frontend features are UNVERIFIED and require manual action to deploy.** The bundled 62 recipes use legacy, unverified nutrition and price estimates. They are a demonstration catalog, not a dietetic or medically validated source.
 
 ## Features
 
-- Registration, login, current account and logout with Argon2 passwords and expiring JWTs.
+- Registration, login, current account, password reset, email verification, and secure account deletion with Argon2 passwords and expiring JWTs.
+- Single-use, time-expiring token system securely hashed with SHA-256 for password reset and email verification flows.
 - Backend-only meal selection. No frontend recipe database or offline fake-results fallback.
 - Selected cooking days, people, meal types, diet, allergies, exclusions, appliances and goals.
 - Hard constraints applied before similarity ranking; no diet/allergy relaxation.
@@ -239,7 +240,7 @@ python -m pytest -q
 - Access tokens stay in browser memory. Preferences are saved locally as an explicit draft; logout clears the draft.
 - Diet/allergy safety depends on correct, reviewed recipe and ingredient metadata. Packaged foods, mixed ingredients and cross-contact require independent label/preparation checks.
 - For incomplete ingredient pricing, budget is conservatively based on whole-recipe cost, with no made-up pantry discount. When every ingredient is priced, purchases after pantry subtraction determine spend. Bounded exact feasibility search reports its limit honestly.
-- No password reset/email verification, MFA, refresh token flow, account deletion UI or automated backup system is included. Configure provider backups, monitoring, retention and recovery before public launch.
+- No MFA, refresh token flow, automated draft retention, or automated backup system is included. Configure provider backups, monitoring, retention and recovery before public launch.
 
 For optional real-browser verification, install Chromium with `npx playwright-core install chromium`, then run `npm run test:browser`. Alternatively set `CHROME_PATH` to an installed Chromium executable. Browser checks generate ignored images in `test-results/`.
 
@@ -249,6 +250,6 @@ Add reviewed desktop/mobile screenshots under `docs/screenshots/` after hosted s
 
 ## Remaining improvements
 
-Reviewed recipes with complete preparation instructions, ingredient prices and cited nutrition; larger catalog/variety; finer nutritional targets; pantry inventory consumption; password reset and email verification; deployment smoke tests and monitoring. Natural-language preferences and AI substitutions are not enabled: all current substitutions go through the deterministic swap endpoint so they preserve constraints.
+Reviewed recipes with complete preparation instructions, ingredient prices and cited nutrition; larger catalog/variety; finer nutritional targets; pantry inventory consumption; deployment smoke tests and monitoring. Natural-language preferences and AI substitutions are not enabled: all current substitutions go through the deterministic swap endpoint so they preserve constraints.
 
 Official references: [Gemini embeddings](https://ai.google.dev/gemini-api/docs/embeddings), [Gemini structured output](https://ai.google.dev/gemini-api/docs/structured-output), [Render Blueprint specification](https://render.com/docs/blueprint-spec), [Vercel project configuration](https://vercel.com/docs/project-configuration).
