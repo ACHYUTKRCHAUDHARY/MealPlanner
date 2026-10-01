@@ -2,7 +2,7 @@
 
 Plateful connects a vanilla JavaScript meal-planning wizard to a FastAPI backend with PostgreSQL persistence, account ownership, pgvector recipe retrieval and optional Gemini-assisted explanations. The original lime/cream visual design is retained.
 
-**Status:** implementation and local automated tests are available. This is not a claim that hosted production, live Gemini or the PostgreSQL CI run has been verified. See [verification and limitations](docs/IMPLEMENTATION.md). The bundled eight recipes use legacy, unverified nutrition and price estimates. They are a demonstration catalog, not a dietetic or medically validated source.
+**Status:** implementation and local automated tests are available. The PostgreSQL 16/pgvector CI workflow passed. Hosted production and live Gemini still require deployment credentials and verification. See [verification and limitations](docs/IMPLEMENTATION.md). The bundled eight recipes use legacy, unverified nutrition and price estimates. They are a demonstration catalog, not a dietetic or medically validated source.
 
 ## Features
 
@@ -252,3 +252,7 @@ Add reviewed desktop/mobile screenshots under `docs/screenshots/` after hosted s
 Reviewed recipes with complete preparation instructions, ingredient prices and cited nutrition; larger catalog/variety; finer nutritional targets; pantry inventory consumption; password reset and email verification; deployment smoke tests and monitoring. Natural-language preferences and AI substitutions are not enabled: all current substitutions go through the deterministic swap endpoint so they preserve constraints.
 
 Official references: [Gemini embeddings](https://ai.google.dev/gemini-api/docs/embeddings), [Gemini structured output](https://ai.google.dev/gemini-api/docs/structured-output), [Render Blueprint specification](https://render.com/docs/blueprint-spec), [Vercel project configuration](https://vercel.com/docs/project-configuration).
+
+## Hosted verification
+
+Use a dedicated test account. Set `PLATEFUL_API_URL`, `PLATEFUL_TEST_EMAIL`, and `PLATEFUL_TEST_PASSWORD` in your terminal, then run `python scripts/verify_live.py --require-ai`. The script checks health, registration/login, preferences, pantry, generation, actual RAG/AI modes, swaps, history, grocery persistence and token revocation; it deletes its generated test plan. The test account remains available for future smoke tests.

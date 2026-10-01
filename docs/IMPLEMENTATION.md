@@ -18,7 +18,7 @@ This branch upgrades the existing prototype without replacing its frontend frame
 
 | Check | Result |
 |---|---|
-| Backend unit/API tests | 29 passed, 1 PostgreSQL-specific test skipped |
+| Backend unit/API tests | Initial PostgreSQL CI: 30 passed; additional catalog-preservation regression tested locally |
 | Frontend DOM + real HTTP API | Pass: register, preferences, generate, swap, save, history, groceries, network failure |
 | Real Chromium | Pass: register, generate, swap, save, history, grocery check, logout |
 | Desktop and 390px mobile | Screenshots inspected; no horizontal document overflow |
@@ -33,7 +33,7 @@ This branch upgrades the existing prototype without replacing its frontend frame
 
 ## Not verified / remaining limitations
 
-1. Live PostgreSQL migration and pgvector SQL integration could not run locally: the environment could not create a non-root database OS account. The CI workflow provides PostgreSQL 16 + pgvector. Its result must be checked before merging/releasing.
+1. PostgreSQL 16 migrations, API integration and actual pgvector SQL retrieval passed in [GitHub CI](https://github.com/ACHYUTKRCHAUDHARY/MealPlanner/actions/runs/36854959262). Provider embeddings were mocked for deterministic testing; live Gemini still needs a key.
 2. No live Gemini key was supplied. Provider calls, indexing and production model availability still need a real smoke test; AI error/output validation is unit tested.
 3. Render/Vercel resources were not provisioned or deployed. Hosted CORS, external DB connectivity, TLS and full hosted user flow remain release checks.
 4. Eight legacy recipes are a small demonstration catalog, with unverified nutrition/cost estimates, missing preparation instructions and missing carbohydrate/fat/fiber values. Import reviewed recipes, labels, cooking instructions, nutrient provenance and local ingredient prices before claiming dietary or medical reliability.
@@ -110,6 +110,10 @@ The complete architecture, database schema, endpoints, variables, Windows local 
 - `scripts/test-ui.mjs`
 - `vercel.json`
 
+- `backend/app/db/bootstrap.py`
+- `backend/tests/test_bootstrap.py`
+- `scripts/verify_live.py`
+
 ## Modified files
 
 - `.gitignore`
@@ -134,4 +138,4 @@ The complete architecture, database schema, endpoints, variables, Windows local 
 
 ## Publishing status
 
-Code is committed locally. Automatic approval review blocked the branch push pending explicit authorization to publish to the GitHub repository. No pull request or deployment was created.
+Implementation published in [PR #1](https://github.com/ACHYUTKRCHAUDHARY/MealPlanner/pull/1). GitHub ownership and push permissions were verified. Automatic approval review blocked Vercel deployment pending explicit authorization and target verification. Render requires confirmation of workspace "My Workspace". DATABASE_URL and GEMINI_API_KEY have not been supplied. No hosted deployment was created.

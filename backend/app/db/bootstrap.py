@@ -3,6 +3,7 @@
 Use a separate pre-deploy migration job for a scaled deployment. Existing recipe
 catalogs are never overwritten automatically; import reviewed updates explicitly.
 """
+from pathlib import Path
 from alembic import command
 from alembic.config import Config
 from sqlalchemy import select, func, text
@@ -18,7 +19,10 @@ def bootstrap():
         if postgres:
             connection.execute(text('SELECT pg_advisory_lock(731604220)'))
         try:
-            command.upgrade(Config('alembic.ini'), 'head')
+            backend = Path(__file__).resolve().parents[2]
+            config = Config(str(backend / 'alembic.ini'))
+            config.set_main_option('script_location', str(backend / 'migrations'))
+            command.upgrade(config, 'head')
             with Session(engine()) as db:
                 if db.scalar(select(func.count()).select_from(Recipe)) == 0:
                     seed(db)
