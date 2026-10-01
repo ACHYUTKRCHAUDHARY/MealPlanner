@@ -11,7 +11,7 @@ services:
     autoDeployTrigger: "off"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12.14
+        value: 3.12.3
       - key: ENVIRONMENT
         value: production
       - key: DATABASE_URL

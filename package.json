@@ -9,7 +9,7 @@
     "test:browser": "node scripts/test-browser.mjs"
   },
   "engines": {
-    "node": ">=22.22.2"
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "jsdom": "^30.1.1",
