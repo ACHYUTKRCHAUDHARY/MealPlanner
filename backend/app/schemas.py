@@ -107,6 +107,16 @@ class SavePlan(StrictModel):
     plan_id: str = Field(min_length=36, max_length=36)
 
 
+class EmailOnly(StrictModel):
+    """Used for password reset requests where only the email is needed."""
+    email: EmailStr
+
+    @field_validator('email')
+    @classmethod
+    def email_lower(cls, value):
+        return str(value).lower()
+
+
 class PantryRequest(StrictModel):
     items: list[Quantity] = Field(max_length=100)
 

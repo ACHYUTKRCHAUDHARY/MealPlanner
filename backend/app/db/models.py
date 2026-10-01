@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from uuid import uuid4
-from sqlalchemy import String, ForeignKey, JSON, DateTime, Float, Integer, Boolean, UniqueConstraint, CheckConstraint
+from sqlalchemy import String, ForeignKey, JSON, DateTime, Float, Integer, Boolean, UniqueConstraint, CheckConstraint, Index
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from pgvector.sqlalchemy import Vector
 
@@ -23,6 +23,7 @@ class User(Identity, Base):
     __tablename__ = 'users'
     email: Mapped[str] = mapped_column(String(254), unique=True, index=True)
     password_hash: Mapped[str] = mapped_column(String(255))
+    email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     token_version: Mapped[int] = mapped_column(default=0)
     preferences: Mapped['UserPreference'] = relationship(cascade='all, delete-orphan', uselist=False)
     plans: Mapped[list['MealPlan']] = relationship(cascade='all, delete-orphan')
@@ -98,6 +99,20 @@ class PantryItem(Identity, Base):
     name: Mapped[str] = mapped_column(String(100))
     quantity: Mapped[float | None] = mapped_column(Float)
     unit: Mapped[str] = mapped_column(String(20), default='g')
+
+
+class AccountToken(Identity, Base):
+    """Single-use, expiring tokens for password reset and email verification.
+
+    The raw token value is never stored. Only its SHA-256 hash is persisted.
+    """
+    __tablename__ = 'account_tokens'
+    __table_args__ = (Index('ix_account_tokens_user_purpose', 'user_id', 'purpose'),)
+    user_id: Mapped[str] = mapped_column(ForeignKey('users.id', ondelete='CASCADE'), index=True)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True)
+    purpose: Mapped[str] = mapped_column(String(20))  # 'password_reset' or 'email_verify'
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    used: Mapped[bool] = mapped_column(Boolean, default=False)
 
 
 class RateBucket(Base):

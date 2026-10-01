@@ -78,3 +78,44 @@ def test_rate_limit(client,monkeypatch):
     creds={'email':'nobody@example.com','password':'wrong-password-string'}
     assert client.post('/api/v1/auth/login',json=creds).status_code==401
     assert client.post('/api/v1/auth/login',json=creds).status_code==429
+
+
+def test_account_management(client, authorized):
+    me = client.get('/api/v1/auth/me', headers=authorized).json()
+    assert not me['email_verified']
+    
+    # Email verification
+    send_verify = client.post('/api/v1/auth/send-verification', headers=authorized)
+    assert send_verify.status_code == 200
+    token = send_verify.json()['_dev_token']
+    assert token
+    
+    verify = client.post('/api/v1/auth/verify-email', json={'token': token})
+    assert verify.status_code == 200
+    
+    me = client.get('/api/v1/auth/me', headers=authorized).json()
+    assert me['email_verified']
+    
+    # Password reset
+    req_reset = client.post('/api/v1/auth/request-password-reset', json={'email': me['email']})
+    assert req_reset.status_code == 200
+    reset_token = req_reset.json()['_dev_token']
+    assert reset_token
+    
+    new_password = 'new-secure-password-123'
+    reset = client.post('/api/v1/auth/reset-password', json={'token': reset_token, 'new_password': new_password})
+    assert reset.status_code == 200
+    
+    # Old token is revoked
+    assert client.get('/api/v1/auth/me', headers=authorized).status_code == 401
+    
+    # Login with new password
+    login = client.post('/api/v1/auth/login', json={'email': me['email'], 'password': new_password})
+    assert login.status_code == 200
+    new_auth = {'Authorization': 'Bearer ' + login.json()['access_token']}
+    
+    # Account deletion
+    assert client.delete('/api/v1/auth/account', headers=new_auth).status_code == 204
+    assert client.get('/api/v1/auth/me', headers=new_auth).status_code == 401
+    assert client.post('/api/v1/auth/login', json={'email': me['email'], 'password': new_password}).status_code == 401
+
