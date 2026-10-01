@@ -1,0 +1,11 @@
+import {cp, mkdir, writeFile, rm} from 'node:fs/promises';
+const apiUrl = process.env.PUBLIC_API_URL || (process.env.VERCEL ? '' : 'http://localhost:8000');
+if (!apiUrl) throw new Error('Set PUBLIC_API_URL to the Render HTTPS backend URL.');
+const url = new URL(apiUrl);
+if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash || url.pathname !== '/') throw new Error('PUBLIC_API_URL must be an origin without credentials, path, query or fragment.');
+if (process.env.VERCEL && url.protocol !== 'https:') throw new Error('Production API URL must use HTTPS.');
+await rm('dist',{recursive:true,force:true});
+await mkdir('dist');
+await cp('frontend','dist',{recursive:true});
+await writeFile('dist/config.js',`window.PLATEFUL_CONFIG = ${JSON.stringify({apiUrl:url.origin})};\n`);
+console.log('Built frontend in dist/');

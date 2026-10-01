@@ -1,9 +1,10 @@
+# Optional. Windows-native setup is documented in README.md.
 services:
   api:
     build: ./backend
     ports: ["8000:8000"]
-    volumes: ["./backend:/app"]
+    env_file: ./backend/.env
   web:
     image: nginx:alpine
-    ports: ["8080:80"]
+    ports: ["5500:80"]
     volumes: ["./frontend:/usr/share/nginx/html:ro"]

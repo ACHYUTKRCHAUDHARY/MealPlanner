@@ -6,3 +6,10 @@ __pycache__/
 node_modules/
 .DS_Store
 .openai/
+.env.*
+!.env.example
+*.db
+*.db-*
+dist/
+playwright-report/
+test-results/
